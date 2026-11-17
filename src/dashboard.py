@@ -44,11 +44,17 @@ with col_left:
   cat_summary = (
       df_tx.groupby("category_name")["cashback_earned"].sum().reset_index()
   )
+  cat_summary = cat_summary.rename(
+      columns={"category_name": "Категория", "cashback_earned": "Кешбэк, ₽"}
+  )
   st.bar_chart(
-      data=cat_summary, x="category_name", y="cashback_earned", color="#FFDD2D"
+      data=cat_summary, x="Категория", y="Кешбэк, ₽", color="#FFDD2D"
   )
 
 with col_right:
   st.subheader("Топ категорий по обороту")
   cat_turnover = df_tx.groupby("category_name")["amount"].sum().reset_index()
-  st.bar_chart(data=cat_turnover, x="category_name", y="amount")
+  cat_turnover = cat_turnover.rename(
+      columns={"category_name": "Категория", "amount": "Оборот, ₽"}
+  )
+  st.bar_chart(data=cat_turnover, x="Категория", y="Оборот, ₽")
